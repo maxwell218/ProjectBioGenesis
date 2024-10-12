@@ -69,7 +69,7 @@ switch(entity_state) {
 			}
 			*/
 
-			// Transition to Moving State if moving horizontally
+			// Transition to Moving State if moving
 			if ((key_left || key_right || key_up || key_down) || (h_speed != 0 || v_speed != 0)) {
 				change_state(ENTITY_STATE.MOVING);
 			} 
