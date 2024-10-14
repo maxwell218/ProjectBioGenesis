@@ -2,7 +2,7 @@
 event_inherited();
 
 player_is_in_vision_radius = false;
-vision_radius = 90;
+vision_radius = 110;
 vision_cone_angle = 135;
 rotation_speed = 3;
 image_speed = 0;

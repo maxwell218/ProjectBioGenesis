@@ -1,4 +1,4 @@
-/// @description 
+/// @description States
 EXIT_IF_FPS_NOT_SUPPORTED;
 event_inherited();
 
