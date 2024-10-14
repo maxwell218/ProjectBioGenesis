@@ -8,7 +8,7 @@ entity_state = ENTITY_STATE.IDLE;
 entity_inner_state = INNER_STATE.ENTER;
 
 enum ENEMY_STATE {
-	WANDER,
-	CHASE,
-	FLEE,
+	WANDER = 30,
+	CHASE = 31,
+	FLEE = 32,
 }

@@ -4,7 +4,7 @@ var _current_x = prev_x + lengthdir_x(1, image_angle);
 var _current_y = prev_y + lengthdir_y(1, image_angle);
 
 if (check) {
-	repeat(300) {
+	repeat(320) {
 		var _collision = collision_line(prev_x, prev_y, _current_x, _current_y, obj_enemy, true, true);
 		if (_collision != noone) {
 			check = false;

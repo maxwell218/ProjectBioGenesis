@@ -27,6 +27,11 @@ v_speed = 0;
 rotation_angle = 0;
 rotation_speed = 10;
 
+function change_state(_new_state) {
+	entity_inner_state = INNER_STATE.ENTER;
+	entity_state = _new_state;
+}
+
 
 
 

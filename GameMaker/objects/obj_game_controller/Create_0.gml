@@ -30,7 +30,6 @@ global.target_framerate = 60;
 global.target_delta = 1/global.target_framerate;
 global.actual_delta = delta_time/1000000;
 global.delta_multiplier = global.actual_delta/global.target_delta;
-global.time = 0;
 
 #endregion
 
@@ -39,8 +38,8 @@ global.time = 0;
 // #macro EMPTY_TILE_ID 13
 #macro DELTA global.delta_multiplier
 #macro ALARM_INACTIVE -100
-#macro MIN_DELTA_TIME_SUPPORTED (1 / 130)
-#macro MAX_DELTA_TIME_SUPPORTED (1 / 9)
+#macro MIN_DELTA_TIME_SUPPORTED (1 / 144)
+#macro MAX_DELTA_TIME_SUPPORTED (1 / 30)
 #macro EXIT_IF_FPS_NOT_SUPPORTED if (scr_is_delta_time_supported() == false) { exit }
 
 #endregion

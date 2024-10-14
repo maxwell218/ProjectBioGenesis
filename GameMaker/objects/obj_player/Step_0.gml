@@ -31,7 +31,7 @@ if (is_aiming) {
 	if (image_index <= 0.5) {
 		image_index = 0;
 		image_speed = 0;
-		sprite_index = spr_player;
+		sprite_index = spr_player_idle;
 	}
 }
 
@@ -47,6 +47,10 @@ if (key_aim_held && image_index == 0) {
 if (is_ready_to_fire && key_primary_attack) {
 	var _inst = instance_create_layer(x + lengthdir_x(15, rotation_angle), y + lengthdir_y(15, rotation_angle), "Entities", obj_bullet);
 	_inst.image_angle = rotation_angle;
+	with (obj_camera_controller) {
+		var _force = 10;
+		screen_shake(_force);	
+	}
 }
 
 #endregion
@@ -168,9 +172,6 @@ switch(entity_state) {
 // Calculate Input Axis
 var _input_x = (key_right - key_left);
 var _input_y = (key_down - key_up);
-
-var _move_x = 0;
-var _move_y = 0;
 
 // Get Length
 if (_input_x != 0 || _input_y != 0) {

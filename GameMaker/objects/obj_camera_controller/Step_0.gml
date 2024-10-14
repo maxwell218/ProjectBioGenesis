@@ -15,4 +15,12 @@ y += (target_y - y) / 25;
 x = clamp(x, min_view_x, max_view_x);
 y = clamp(y, min_view_y, max_view_y);
 
-camera_set_view_pos(view_camera[0], x - (camera_width * .5), y - (camera_height * .5));
+if (shake) {
+	var _range = 3;
+	x = clamp(x + round(random_range(-_range, _range)), min_view_x, max_view_x);
+	y = clamp(y + round(random_range(-_range, _range)), min_view_y, max_view_y);
+	camera_set_view_pos(view_camera[0], x - (camera_width * .5), y  - (camera_height * .5));
+} else {
+	camera_set_view_pos(view_camera[0], x - (camera_width * .5), y - (camera_height * .5));
+}
+

@@ -6,8 +6,6 @@ var _yy = floor(y + .5);
 draw_sprite_ext(sprite_index, image_index, _xx + 1, _yy + 1, image_xscale, image_yscale, rotation_angle - 90, c_black, 0.5);
 draw_sprite_ext(sprite_index, image_index, _xx, _yy, image_xscale, image_yscale, rotation_angle - 90, c_white, 1);
 
-
-
 if (global.debug) {
 	
 	// Draw collision box
