@@ -5,29 +5,3 @@ check = true;
 prev_x = x;
 prev_y = y;
 can_damage = true;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

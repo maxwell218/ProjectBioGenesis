@@ -7,10 +7,10 @@ if (player_is_in_vision_radius) {
 			var _pd = point_direction(other.x, other.y, x, y);
 			var _dd = angle_difference(other.rotation_angle, _pd);
 
-			other.rotation_angle -= min(abs(_dd), other.rotation_speed) * sign(_dd) * DELTA;
+			other.rotation_angle -= min(abs(_dd), other.rotation_speed * DELTA) * sign(_dd);
 
 			if (other.rotation_angle >= 360 || other.rotation_angle <= -360) {
-				other.rotation_angle = 0;	
+				other.rotation_angle = 0;
 			}
 		}
 	}

@@ -8,7 +8,11 @@ function scr_move_and_collide() {
 		while (!place_meeting(x + _one_pixel, y, obj_solid)) {
 			x += _one_pixel;
 		}
-	
+		
+		// Check for left feeler
+		// Check for right feeler
+		
+		// If both feelers are colliding, we stop
 		h_speed = 0;
 	}
 	
@@ -22,7 +26,11 @@ function scr_move_and_collide() {
 		while (!place_meeting(x, y + _one_pixel, obj_solid)) {
 			y += _one_pixel;
 		}
-	
+		
+		// Check for left feeler
+		// Check for right feeler
+		
+		// If both feelers are colliding, we stop
 		v_speed = 0;
 	}
 	

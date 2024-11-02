@@ -14,7 +14,7 @@ switch(entity_state) {
 			entity_inner_state = INNER_STATE.UPDATE;
 			
 		} else if (entity_inner_state == INNER_STATE.UPDATE) {
-			if (image_index == sprite_get_number(spr_zombie_idle) - 1) {
+			if (image_index >= sprite_get_number(spr_zombie_idle) - 1) {
 				image_speed = 0;
 				image_index = 0;
 				alarm[0] = idle_anim_cooldown;
@@ -85,15 +85,15 @@ if (entity_state == ENEMY_STATE.CHASE) {
 	var _dir = undefined;
 
 	if (_player != noone) {
-		_dir = rotation_angle;
+		moving_direction = rotation_angle;
 	}// else if (!last_known_target_position_reached) {
 	//	_dir = 	point_direction(x, y, last_known_target_position_x, last_known_target_position_y);
 	//	// Change state
 	//}
 	
 	// Apply Accel
-	h_speed += lengthdir_x(accel, _dir) * DELTA;
-	v_speed += lengthdir_y(accel, _dir) * DELTA;
+	h_speed += lengthdir_x(accel, moving_direction) * DELTA;
+	v_speed += lengthdir_y(accel, moving_direction) * DELTA;
 
 	// Apply Decel
 	//if (!player_is_in_vision_radius && distance_to_point(last_known_target_position[0], last_known_target_position[1]) <= max_speed) {
@@ -116,9 +116,8 @@ if (entity_state == ENEMY_STATE.CHASE) {
 // Clamp Speed
 var _speed = point_distance(0, 0, h_speed, v_speed);
 if (_speed > max_speed) {
-	var _dir = point_direction(0, 0, h_speed, v_speed);
-	h_speed = lengthdir_x(max_speed, _dir) * DELTA;
-	v_speed = lengthdir_y(max_speed, _dir) * DELTA;
+	h_speed = lengthdir_x(max_speed, moving_direction);
+	v_speed = lengthdir_y(max_speed, moving_direction);
 }
 
 #endregion

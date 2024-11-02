@@ -7,6 +7,8 @@ vision_cone_angle = 135;
 rotation_speed = 3;
 image_speed = 0;
 idle_anim_cooldown = round(random_range(120, 420));	
+moving_direction = 0;
+has_legs = true;
 
 #region Movement Variables
 

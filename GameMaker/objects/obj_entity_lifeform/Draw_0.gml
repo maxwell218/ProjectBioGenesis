@@ -3,7 +3,14 @@
 var _xx = floor(x + .5);
 var _yy = floor(y + .5);
 
+// Shadow
+// TODO Make a shader based shadow
 draw_sprite_ext(sprite_index, image_index, _xx + 1, _yy + 1, image_xscale, image_yscale, rotation_angle - 90, c_black, 0.5);
+
+if (has_legs && is_moving()) {
+	draw_sprite_ext(spr_legs, legs_image_index, _xx, _yy, image_xscale, image_yscale, moving_angle - 90, c_black, 1);
+}
+
 draw_sprite_ext(sprite_index, image_index, _xx, _yy, image_xscale, image_yscale, rotation_angle - 90, c_white, 1);
 
 if (global.debug) {
@@ -12,6 +19,9 @@ if (global.debug) {
 	draw_set_alpha(0.5);
 	draw_rectangle_color(bbox_left, bbox_top, bbox_right, bbox_bottom, c_blue, c_blue, c_blue, c_blue, false);
 	draw_set_alpha(1);
+	
+	// Draw feelers
+	// draw_rectangle_color(bbox_left, bbox_top, bbox_right, bbox_bottom, c_blue, c_blue, c_blue, c_blue, false);
 	
 	// Draw current entity state
 	draw_set_halign(fa_center);
@@ -29,10 +39,11 @@ if (global.debug) {
 	draw_text(bbox_left, y, "hspd: " + string(h_speed));
 	draw_text(bbox_left, y + 16, "vspd: " + string(v_speed));
 	
-	draw_text(bbox_left, y + 32, x);
-	draw_text(bbox_left, y + 48, y);
-	draw_text(bbox_left, y + 64, rotation_angle);
+	// draw_text(bbox_left, y + 32, x);
+	// draw_text(bbox_left, y + 48, y);
+	// draw_text(bbox_left, y + 64, rotation_angle);
 	// draw_text(bbox_left, y + 32, image_angle);
+	draw_text(bbox_left, y + 32, moving_direction);
 	// draw_text(bbox_left, y + 48, percent);
 	// draw_text(bbox_left, y + 64, position);
 }

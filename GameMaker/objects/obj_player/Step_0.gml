@@ -15,8 +15,6 @@ key_primary_attack = mouse_check_button_pressed(mb_left);
 
 #endregion
 
-#region Player States
-
 #region Attacking
 if (is_aiming) {
 	if (image_index >= sprite_get_number(spr_player_aiming_pistol) - 1 && image_speed != 0) {		
@@ -45,8 +43,12 @@ if (key_aim_held && image_index == 0) {
 }
 
 if (is_ready_to_fire && key_primary_attack) {
+	
+	// Bullet trace
 	var _inst = instance_create_layer(x + lengthdir_x(15, rotation_angle), y + lengthdir_y(15, rotation_angle), "Entities", obj_bullet);
 	_inst.image_angle = rotation_angle;
+	
+	// Screen shake
 	with (obj_camera_controller) {
 		var _force = 10;
 		screen_shake(_force);	
@@ -54,6 +56,8 @@ if (is_ready_to_fire && key_primary_attack) {
 }
 
 #endregion
+
+#region Player States
 
 switch(entity_state) {
 	case ENTITY_STATE.IDLE:
@@ -177,11 +181,11 @@ var _input_y = (key_down - key_up);
 if (_input_x != 0 || _input_y != 0) {
 
     // Calculate Direction 
-	var _dir = point_direction(0, 0, _input_x, _input_y);
+	moving_direction = point_direction(0, 0, _input_x, _input_y);
 	
 	// Apply Accel
-    h_speed += lengthdir_x(accel, _dir) * DELTA;
-    v_speed += lengthdir_y(accel, _dir) * DELTA;
+    h_speed += lengthdir_x(accel, moving_direction) * DELTA;
+    v_speed += lengthdir_y(accel, moving_direction) * DELTA;
 	
 } 
 
@@ -202,9 +206,9 @@ if (abs(v_speed) < decel) v_speed = 0;
 // Clamp Speed
 var _speed = point_distance(0, 0, h_speed, v_speed);
 if (_speed > max_speed) {
-	var _dir = point_direction(0, 0, h_speed, v_speed);
-	h_speed = lengthdir_x(max_speed, _dir) * DELTA;
-	v_speed = lengthdir_y(max_speed, _dir) * DELTA;
+	moving_direction = point_direction(0, 0, h_speed, v_speed);
+	h_speed = lengthdir_x(max_speed, moving_direction);
+	v_speed = lengthdir_y(max_speed, moving_direction);
 }
 
 #endregion

@@ -54,6 +54,7 @@
     {"id":{"name":"ts_floor","path":"tilesets/ts_floor/ts_floor.yy",},},
     {"id":{"name":"scr_is_delta_time_supported","path":"scripts/scr_is_delta_time_supported/scr_is_delta_time_supported.yy",},},
     {"id":{"name":"scr_get_state_string","path":"scripts/scr_get_state_string/scr_get_state_string.yy",},},
+    {"id":{"name":"spr_legs","path":"sprites/spr_legs/spr_legs.yy",},},
     {"id":{"name":"scr_point_in_angle","path":"scripts/scr_point_in_angle/scr_point_in_angle.yy",},},
     {"id":{"name":"spr_zombie_idle","path":"sprites/spr_zombie_idle/spr_zombie_idle.yy",},},
     {"id":{"name":"scr_move_and_collide","path":"scripts/scr_move_and_collide/scr_move_and_collide.yy",},},

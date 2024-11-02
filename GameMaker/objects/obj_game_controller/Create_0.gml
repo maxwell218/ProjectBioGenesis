@@ -14,7 +14,7 @@ randomize();
 // Second new changes for the same version number
 // Third number for hotfixes
 version_number = "v0.0.1";
-global.debug = true;
+global.debug = false;
 
 // Resizes the application surface to fit within the view port
 display_set_gui_size(view_wport[0], view_hport[0]);
