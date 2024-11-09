@@ -9,6 +9,7 @@ if (global.debug) {
 	draw_circle(x, y, vision_radius, false);
 	draw_set_alpha(1);
 	draw_text(x, y - 22, alarm[0]);
+	draw_text(x, y + 22, image_index);
 	
 	// Draw Next Wander Coordinates
 	// draw_text(x, y - 56, string(last_known_target_position_x) + ", " + string(last_known_target_position_y));

@@ -52,6 +52,8 @@ switch(entity_state) {
 			// Check if we should still chase
 			check_vision_radius();
 			
+			var _distance = distance_to_object(obj_player);
+			
 			// TODO Go towards last known position
 			if (!player_is_in_vision_radius) {
 				var _player = instance_find(obj_player, 0);
@@ -62,12 +64,31 @@ switch(entity_state) {
 				//}
 				
 				entity_inner_state = INNER_STATE.LEAVE;
+			} else if (_distance <= 7) {
+				change_state(ENTITY_STATE.ATTACK);	
 			}
 		} else if (entity_inner_state == INNER_STATE.LEAVE) {
 			change_state(ENTITY_STATE.IDLE);
 		}
 		break;
-		
+	case ENTITY_STATE.ATTACK:
+		if (entity_inner_state = INNER_STATE.ENTER) {
+			sprite_index = spr_zombie_attack_1;
+			image_index = 0;
+			image_speed = 1;
+			entity_inner_state = INNER_STATE.UPDATE;
+		} else if (entity_inner_state == INNER_STATE.UPDATE) {
+			
+			// Check if we should still chase
+			check_vision_radius();
+			
+			if (image_index >= sprite_get_number(spr_zombie_attack_1) - 1) {
+				entity_inner_state = INNER_STATE.LEAVE;
+			} 
+		} else if (entity_inner_state == INNER_STATE.LEAVE) {
+			change_state(ENTITY_STATE.IDLE);
+			image_index = 0;
+		}
 	case ENEMY_STATE.WANDER:
 		break;
 }
@@ -103,10 +124,9 @@ if (entity_state == ENEMY_STATE.CHASE) {
 	
 } else {
 	// Apply Decel
-	if (!player_is_in_vision_radius) {
-		if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
-		if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
-	} 
+	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
+	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
+
 	
 	// Stop If Low Speed
 	if (abs(h_speed) < decel) h_speed = 0;

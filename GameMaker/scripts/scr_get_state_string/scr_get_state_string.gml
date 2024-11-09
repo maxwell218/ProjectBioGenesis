@@ -2,13 +2,15 @@ function scr_get_state_string(_state) {
 	
 	switch(_state) {
 		case ENTITY_STATE.MOVING:
-			return "moving"
+			return "moving";
 		case ENTITY_STATE.JUMP:
-			return "jump"
+			return "jump";
 		case ENTITY_STATE.IDLE:
-			return "idle"
+			return "idle";
 		case ENTITY_STATE.HURT:
-			return "hurt"
+			return "hurt";
+		case ENTITY_STATE.ATTACK:
+			return "attack";
 		default:
 			return "unknown";
 	}

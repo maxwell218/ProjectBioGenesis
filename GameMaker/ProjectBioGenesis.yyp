@@ -68,6 +68,7 @@
     {"id":{"name":"spr_player_collision","path":"sprites/spr_player_collision/spr_player_collision.yy",},},
     {"id":{"name":"obj_level_controller","path":"objects/obj_level_controller/obj_level_controller.yy",},},
     {"id":{"name":"spr_player_aiming_pistol","path":"sprites/spr_player_aiming_pistol/spr_player_aiming_pistol.yy",},},
+    {"id":{"name":"spr_zombie_attack_1","path":"sprites/spr_zombie_attack_1/spr_zombie_attack_1.yy",},},
     {"id":{"name":"obj_zombie","path":"objects/obj_zombie/obj_zombie.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"spr_zombie_collision","path":"sprites/spr_zombie_collision/spr_zombie_collision.yy",},},
