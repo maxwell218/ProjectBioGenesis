@@ -25,6 +25,7 @@ v_speed = 0;
 
 // Animation
 rotation_angle = 0;
+previous_rotation_angle = rotation_angle;
 rotation_speed = 10;
 
 // Legs
@@ -32,6 +33,8 @@ has_legs = false;
 legs_animation_length = sprite_get_number(spr_legs);
 legs_animation_speed = 1;
 legs_image_index = 0;
+
+#region Functions
 
 function change_state(_new_state) {
 	entity_inner_state = INNER_STATE.ENTER;
@@ -53,6 +56,11 @@ function is_moving() {
 	return false;
 }
 
+function is_rotating() {
+	return (previous_rotation_angle != rotation_angle);
+}
+
+#endregion
 
 
 

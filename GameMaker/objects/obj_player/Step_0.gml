@@ -16,6 +16,7 @@ key_primary_attack = mouse_check_button_pressed(mb_left);
 #endregion
 
 #region Attacking
+
 if (is_aiming) {
 	if (image_index >= sprite_get_number(spr_player_aiming_pistol) - 1 && image_speed != 0) {		
 		image_index = sprite_get_number(spr_player_aiming_pistol) - 1;

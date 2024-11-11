@@ -41,6 +41,7 @@ is_ready_to_fire = false;
 
 #region Functions
 
+// TODO Clean, find a better place
 instance_create_layer(x, y, "Entities", obj_lantern);
 
 #endregion

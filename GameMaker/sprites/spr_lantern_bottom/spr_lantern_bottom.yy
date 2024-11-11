@@ -23,7 +23,7 @@
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"6c68d2ab-7c52-41c2-a9e7-4327b861ed1a","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
-  "origin": 1,
+  "origin": 4,
   "parent": {
     "name": "Lantern",
     "path": "folders/Sprites/Items/Lantern.yy",
@@ -60,7 +60,7 @@
     "visibleRange": null,
     "volume": 1.0,
     "xorigin": 2,
-    "yorigin": 0,
+    "yorigin": 2,
   },
   "swatchColours": null,
   "swfPrecision": 2.525,
