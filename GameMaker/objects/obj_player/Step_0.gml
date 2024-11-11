@@ -29,7 +29,8 @@ if (is_aiming) {
 	if (image_index <= 0.5) {
 		image_index = 0;
 		image_speed = 0;
-		sprite_index = spr_player_idle;
+		sprite_index = spr_player_holding_lantern;
+		// sprite_index = spr_player_idle;
 	}
 }
 
@@ -64,7 +65,7 @@ switch(entity_state) {
 		if (entity_inner_state == INNER_STATE.ENTER) {
 			
 			// Handle Idle State
-			// sprite_index = spr_capsule_idle;
+			// sprite_index = spr_player_idle;
 			entity_inner_state = INNER_STATE.UPDATE;
 			
 		} else if (entity_inner_state == INNER_STATE.UPDATE) {

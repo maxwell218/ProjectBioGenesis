@@ -41,4 +41,6 @@ is_ready_to_fire = false;
 
 #region Functions
 
+instance_create_layer(x, y, "Entities", obj_lantern);
+
 #endregion
