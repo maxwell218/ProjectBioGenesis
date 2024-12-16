@@ -47,6 +47,7 @@ switch(entity_state) {
 			image_speed = 0;
 			alarm[0] = -1;
 			entity_inner_state = INNER_STATE.UPDATE;
+			max_speed = 0.7;
 		} else if (entity_inner_state == INNER_STATE.UPDATE) {
 			
 			// Check if we should still chase
@@ -64,65 +65,73 @@ switch(entity_state) {
 				//}
 				
 				entity_inner_state = INNER_STATE.LEAVE;
-			} else if (_distance <= 7) {
+				// TODO Check angle if towards player aswell
+			} else if (_distance <= 7 && player_is_in_attack_cone()) {
 				change_state(ENTITY_STATE.ATTACK);	
+			} else {
+				var _player = instance_find(obj_player, 0);
+	
+				// Get Direction 
+				// Direction can be towards an enemy, towards a last known enemy position, towards a random wander spot
+				// When a zombie is chasing an enemy, 
+				var _dir = undefined;
+
+				if (_player != noone) {
+					moving_direction = rotation_angle;
+				}// else if (!last_known_target_position_reached) {
+				//	_dir = 	point_direction(x, y, last_known_target_position_x, last_known_target_position_y);
+				//	// Change state
+				//}
+				
+				// Apply Accel
+				h_speed += lengthdir_x(accel, moving_direction) * DELTA;
+				v_speed += lengthdir_y(accel, moving_direction) * DELTA;	
 			}
 		} else if (entity_inner_state == INNER_STATE.LEAVE) {
 			change_state(ENTITY_STATE.IDLE);
 		}
 		break;
 	case ENTITY_STATE.ATTACK:
-		if (entity_inner_state = INNER_STATE.ENTER) {
+		if (entity_inner_state == INNER_STATE.ENTER) {
 			sprite_index = spr_zombie_attack_1;
 			image_index = 0;
 			image_speed = 1;
 			entity_inner_state = INNER_STATE.UPDATE;
+			max_speed = 0.5;
 		} else if (entity_inner_state == INNER_STATE.UPDATE) {
 			
 			// Check if we should still chase
 			check_vision_radius();
 			
-			if (image_index >= sprite_get_number(spr_zombie_attack_1) - 1) {
+			if (image_index >= sprite_get_number(spr_zombie_attack_1)) {
 				entity_inner_state = INNER_STATE.LEAVE;
 			} 
 		} else if (entity_inner_state == INNER_STATE.LEAVE) {
-			change_state(ENTITY_STATE.IDLE);
+			change_state(ENEMY_STATE.CHASE);
 			image_index = 0;
 		}
 	case ENEMY_STATE.WANDER:
 		break;
+	case ENTITY_STATE.DEAD:
+		if (entity_inner_state == INNER_STATE.ENTER) {
+			
+			show_debug_message("Death");
+			sprite_index = spr_zombie_death_1;
+			image_index = 0;
+			image_speed = 1;
+			entity_inner_state = INNER_STATE.UPDATE;
+			
+		} else if (entity_inner_state == INNER_STATE.UPDATE) {
+			
+			if (image_index >= sprite_get_number(spr_zombie_death_1)) {
+				image_speed = 0;
+			} 
+		}
+		break;
 }
 #region Movement
 
-// If our wander cooldown is triggered or if we are currently chasing than we need to move
-if (entity_state == ENEMY_STATE.CHASE) {
-	
-	
-	var _player = instance_find(obj_player, 0);
-	
-	// Get Direction 
-	// Direction can be towards an enemy, towards a last known enemy position, towards a random wander spot
-	// When a zombie is chasing an enemy, 
-	var _dir = undefined;
-
-	if (_player != noone) {
-		moving_direction = rotation_angle;
-	}// else if (!last_known_target_position_reached) {
-	//	_dir = 	point_direction(x, y, last_known_target_position_x, last_known_target_position_y);
-	//	// Change state
-	//}
-	
-	// Apply Accel
-	h_speed += lengthdir_x(accel, moving_direction) * DELTA;
-	v_speed += lengthdir_y(accel, moving_direction) * DELTA;
-
-	// Apply Decel
-	//if (!player_is_in_vision_radius && distance_to_point(last_known_target_position[0], last_known_target_position[1]) <= max_speed) {
-	//	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
-	//	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
-	//} 
-	
-} else {
+if (entity_state != ENEMY_STATE.CHASE) {
 	// Apply Decel
 	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
 	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
@@ -132,6 +141,7 @@ if (entity_state == ENEMY_STATE.CHASE) {
 	if (abs(h_speed) < decel) h_speed = 0;
 	if (abs(v_speed) < decel) v_speed = 0;
 }
+
 
 // Clamp Speed
 var _speed = point_distance(0, 0, h_speed, v_speed);

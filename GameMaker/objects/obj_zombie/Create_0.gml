@@ -1,18 +1,22 @@
 /// @description 
 event_inherited();
 
+// Vision Variables
 player_is_in_vision_radius = false;
 vision_radius = 110;
 vision_cone_angle = 135;
-rotation_speed = 3;
+attack_cone_angle = 70;
+
+// Animation Variables
 image_speed = 0;
 idle_anim_cooldown = round(random_range(120, 420));	
-moving_direction = 0;
 has_legs = true;
 
 #region Movement Variables
 
-max_speed = .75;
+max_speed = .7;
+rotation_speed = 3;
+moving_direction = 0;
 h_speed = 0;
 v_speed = 0;
 
@@ -33,7 +37,7 @@ function player_entered_vision_radius() {
 		var _player = instance_find(obj_player, 0);
 		if (_player != noone) {
 			if (point_in_circle(_player.x, _player.y, x, y, vision_radius)) {
-				if (point_in_angle(x, y, _player.x, _player.y, vision_cone_angle, rotation_angle)) {
+				if (point_in_angle(x, y, _player.x, _player.y, vision_cone_angle, moving_angle)) {
 					player_is_in_vision_radius = true;
 				}
 			}
@@ -56,6 +60,19 @@ function player_left_vision_radius() {
 function check_vision_radius() {
 	player_entered_vision_radius();
 	player_left_vision_radius();
+}
+	
+function player_is_in_attack_cone() {
+	var _player = instance_find(obj_player, 0);
+		if (_player != noone) {
+			if (point_in_circle(_player.x, _player.y, x, y, vision_radius)) {
+				if (point_in_angle(x, y, _player.x, _player.y, attack_cone_angle, moving_angle)) {
+					return true;
+				}
+			}
+		}	
+		
+		return false;
 }
 
 #endregion

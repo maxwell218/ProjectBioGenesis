@@ -37,10 +37,14 @@ if (is_aiming) {
 
 if (key_aim_held && image_index == 0) {
 	is_aiming = true
+	holding_item = false;
+	max_speed = max_speed_while_aiming;
 	sprite_index = spr_player_aiming_pistol;
 	image_speed = 1;
 } else if (!key_aim_held && image_index != 0) {
 	is_aiming = false;
+	holding_item = true;
+	max_speed = max_speed_while_walking;
 	image_speed = -1;
 }
 

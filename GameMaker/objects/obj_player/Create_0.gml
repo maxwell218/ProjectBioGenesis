@@ -7,6 +7,7 @@ entity_damage_on_touch = 0;
 entity_state = ENTITY_STATE.IDLE;
 entity_inner_state = INNER_STATE.ENTER;
 has_legs = true;
+holding_item = true;
 
 #region Inputs
 
@@ -23,7 +24,10 @@ key_primary_attack = 0;
 
 #region Movement Variables
 
-max_speed = 0.8;
+
+max_speed_while_walking = 0.8;
+max_speed_while_aiming = 0.5;
+max_speed = max_speed_while_walking;
 h_speed = 0;
 v_speed = 0;
 
@@ -42,6 +46,6 @@ is_ready_to_fire = false;
 #region Functions
 
 // TODO Clean, find a better place
-instance_create_layer(x, y, "Entities", obj_lantern);
+lantern = instance_create_layer(x, y, "Entities", obj_lantern);
 
 #endregion

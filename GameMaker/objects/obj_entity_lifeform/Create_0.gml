@@ -16,7 +16,7 @@ entity_state = ENTITY_STATE.IDLE;
 entity_inner_state = INNER_STATE.ENTER;
 
 healthbar_height = 3;
-healthbar_y_offset = 5;
+healthbar_y_offset = 10;
 
 moving_direction = 0;
 moving_angle = 0;
@@ -25,7 +25,6 @@ v_speed = 0;
 
 // Animation
 rotation_angle = 0;
-previous_rotation_angle = rotation_angle;
 rotation_speed = 10;
 
 // Legs
@@ -42,22 +41,18 @@ function change_state(_new_state) {
 }
 
 function animate_legs() {
-	legs_image_index = (legs_image_index + legs_animation_speed / (game_get_speed(gamespeed_fps) / sprite_get_speed(spr_legs)) % legs_animation_length);
+	legs_image_index = (legs_image_index + legs_animation_speed * (max_speed + .2) / (game_get_speed(gamespeed_fps) / sprite_get_speed(spr_legs)) % legs_animation_length);
 	if (legs_image_index >= legs_animation_length - 1) {
 		legs_image_index = 0;	
 	}
 }
 
 function is_moving() {
-	if (entity_state == ENTITY_STATE.MOVING || entity_state == ENEMY_STATE.WANDER || entity_state == ENEMY_STATE.CHASE)	{
-		return true;	
+	if (h_speed != 0 || v_speed != 0)	{
+		return true;
 	}
 	
 	return false;
-}
-
-function is_rotating() {
-	return (previous_rotation_angle != rotation_angle);
 }
 
 #endregion
