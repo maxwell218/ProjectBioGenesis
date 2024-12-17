@@ -19,7 +19,7 @@ if (global.debug) {
 	// Draw current entity state
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);
-	var _state = scr_get_state_string(entity_state);
+	var _state = scr_get_state_string(entity_main_state);
 	draw_text(_bbox_left, _yy - healthbar_height - healthbar_y_offset - string_height(_state), _state);
 	
 	// var _hurt_alarm = alarm_array[0];
@@ -43,7 +43,7 @@ if (global.debug) {
 }
 
 // Draw healthbar
-if (entity_health != entity_max_health && entity_state != ENTITY_STATE.DEAD) {
+if (entity_health != entity_max_health && entity_main_state != ENTITY_STATE.DEAD) {
 	var _left = floor(_xx - 16 / 2 + .5);
 	var _right = floor(_xx + 16 / 2 + .5);
 	var _top = floor(_yy - healthbar_height - healthbar_y_offset + .5);

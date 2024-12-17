@@ -2,7 +2,7 @@
 event_inherited();
 
 // Torso and leg rotation
-if (player_is_in_vision_radius && (entity_state != ENTITY_STATE.ATTACK && entity_state != ENTITY_STATE.DEAD)) {
+if (player_is_in_vision_radius && (entity_main_state != ENTITY_STATE.ATTACK && entity_main_state != ENTITY_STATE.DEAD)) {
 	if (instance_exists(obj_player)) {
 		with (obj_player) {
 			var _pd = point_direction(other.x, other.y, x, y);

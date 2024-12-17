@@ -15,7 +15,7 @@ key_primary_attack = mouse_check_button_pressed(mb_left);
 
 #endregion
 
-#region Attacking
+#region Attacking & Reloading
 
 if (is_aiming) {
 	if (image_index >= sprite_get_number(spr_player_aiming_pistol) - 1 && image_speed != 0) {		
@@ -65,7 +65,7 @@ if (is_ready_to_fire && key_primary_attack) {
 
 #region Player States
 
-switch(entity_state) {
+switch(entity_main_state) {
 	case ENTITY_STATE.IDLE:
 		if (entity_inner_state == INNER_STATE.ENTER) {
 			
@@ -79,7 +79,7 @@ switch(entity_state) {
 			/*
 			if (key_jump || !on_ground) {
 				entity_inner_state = INNER_STATE.ENTER;
-			    entity_state = ENTITY_STATE.JUMP;
+			    entity_main_state = ENTITY_STATE.JUMP;
 			}
 			*/
 
@@ -87,6 +87,8 @@ switch(entity_state) {
 			if ((key_left || key_right || key_up || key_down) || (h_speed != 0 || v_speed != 0)) {
 				change_state(ENTITY_STATE.MOVING);
 			} 
+		} else if (entity_inner_state == INNER_STATE.LEAVE) {
+			
 		}
         
 	    break;
@@ -110,7 +112,7 @@ switch(entity_state) {
 			/*
 		    if (key_jump || !on_ground) {
 				entity_inner_state = INNER_STATE.ENTER;
-		        entity_state = ENTITY_STATE.JUMP;
+		        entity_main_state = ENTITY_STATE.JUMP;
 		    }
 			*/
         
@@ -165,10 +167,10 @@ switch(entity_state) {
 		
 			if (on_ground) {
 				entity_inner_state = INNER_STATE.ENTER;
-			    entity_state = ENTITY_STATE.IDLE;
+			    entity_main_state = ENTITY_STATE.IDLE;
 			} else {
 				entity_inner_state = INNER_STATE.ENTER;
-				entity_state = ENTITY_STATE.JUMP;
+				entity_main_state = ENTITY_STATE.JUMP;
 			}
 		}
 		

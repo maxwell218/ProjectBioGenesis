@@ -1,10 +1,30 @@
 /// @description Initialize Player Variables
 event_inherited();
 
+#region State Function Array
+
+state_functions = [];
+
+// Idle
+state_functions[ENTITY_STATE.IDLE] = {
+	enter: scr_player_idle_state_enter(),
+	update: scr_player_idle_state_update(),
+	leave: scr_player_idle_state_leave(),
+};
+
+// Moving
+state_functions[ENTITY_STATE.MOVING] = {
+	enter: scr_player_moving_state_enter(),
+	update: scr_player_moving_state_update(),
+	leave: scr_player_moving_state_leave(),
+};
+
+#endregion
+
 entity_health = 10;
 entity_max_health = 10;
 entity_damage_on_touch = 0;
-entity_state = ENTITY_STATE.IDLE;
+entity_main_state = ENTITY_STATE.IDLE;
 entity_inner_state = INNER_STATE.ENTER;
 has_legs = true;
 holding_item = true;

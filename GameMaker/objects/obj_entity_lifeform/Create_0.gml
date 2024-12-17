@@ -12,7 +12,7 @@ enum ENTITY_STATE {
 entity_health = 0;
 entity_max_health = 0;
 entity_damage_on_touch = 0;
-entity_state = ENTITY_STATE.IDLE;
+entity_main_state = ENTITY_STATE.IDLE;
 entity_inner_state = INNER_STATE.ENTER;
 
 healthbar_height = 3;
@@ -37,7 +37,7 @@ legs_image_index = 0;
 
 function change_state(_new_state) {
 	entity_inner_state = INNER_STATE.ENTER;
-	entity_state = _new_state;
+	entity_main_state = _new_state;
 }
 
 function animate_legs() {

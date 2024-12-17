@@ -2,7 +2,7 @@
 // depth = -y;
 
 // TODO Animate legs until leg is out of frame, not based on movement
-if (entity_state != ENTITY_STATE.DEAD) {
+if (entity_main_state != ENTITY_STATE.DEAD) {
 	if (has_legs && (is_moving() || (legs_image_index != 0 && floor(legs_image_index + .5) != 8))) { 
 		animate_legs();
 	} 

@@ -2,7 +2,7 @@
 EXIT_IF_FPS_NOT_SUPPORTED;
 event_inherited();
 
-switch(entity_state) {
+switch(entity_main_state) {
 	
 	case ENTITY_STATE.IDLE:
 		if (entity_inner_state == INNER_STATE.ENTER) {
@@ -33,7 +33,7 @@ switch(entity_state) {
 			/*
 			if (key_jump || !on_ground) {
 				entity_inner_state = INNER_STATE.ENTER;
-			    entity_state = ENTITY_STATE.JUMP;
+			    entity_main_state = ENTITY_STATE.JUMP;
 			}
 			*/
 
@@ -131,7 +131,7 @@ switch(entity_state) {
 }
 #region Movement
 
-if (entity_state != ENEMY_STATE.CHASE) {
+if (entity_main_state != ENEMY_STATE.CHASE) {
 	// Apply Decel
 	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
 	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
