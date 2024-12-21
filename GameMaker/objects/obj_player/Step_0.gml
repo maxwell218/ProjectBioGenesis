@@ -15,168 +15,9 @@ key_primary_attack = mouse_check_button_pressed(mb_left);
 
 #endregion
 
-#region Attacking & Reloading
-
-if (is_aiming) {
-	if (image_index >= sprite_get_number(spr_player_aiming_pistol) - 1 && image_speed != 0) {		
-		image_index = sprite_get_number(spr_player_aiming_pistol) - 1;
-		image_speed = 0;	
-		is_ready_to_fire = true;
-	} 
-} else {
-	if (is_ready_to_fire) {
-		is_ready_to_fire = false;
-	}
-	if (image_index <= 0.5) {
-		image_index = 0;
-		image_speed = 0;
-		sprite_index = spr_player_holding_lantern;
-		// sprite_index = spr_player_idle;
-	}
-}
-
-if (key_aim_held && image_index == 0) {
-	is_aiming = true
-	holding_item = false;
-	max_speed = max_speed_while_aiming;
-	sprite_index = spr_player_aiming_pistol;
-	image_speed = 1;
-} else if (!key_aim_held && image_index != 0) {
-	is_aiming = false;
-	holding_item = true;
-	max_speed = max_speed_while_walking;
-	image_speed = -1;
-}
-
-if (is_ready_to_fire && key_primary_attack) {
-	
-	// Bullet trace
-	var _inst = instance_create_layer(x + lengthdir_x(15, rotation_angle), y + lengthdir_y(15, rotation_angle), "Entities", obj_bullet);
-	_inst.image_angle = rotation_angle;
-	
-	// Screen shake
-	with (obj_camera_controller) {
-		var _force = 10;
-		screen_shake(_force);	
-	}
-}
-
-#endregion
-
 #region Player States
-
-switch(entity_main_state) {
-	case ENTITY_STATE.IDLE:
-		if (entity_inner_state == INNER_STATE.ENTER) {
-			
-			// Handle Idle State
-			// sprite_index = spr_player_idle;
-			entity_inner_state = INNER_STATE.UPDATE;
-			
-		} else if (entity_inner_state == INNER_STATE.UPDATE) {
-		
-			// Transition to Jumping State if jumping
-			/*
-			if (key_jump || !on_ground) {
-				entity_inner_state = INNER_STATE.ENTER;
-			    entity_main_state = ENTITY_STATE.JUMP;
-			}
-			*/
-
-			// Transition to Moving State if moving
-			if ((key_left || key_right || key_up || key_down) || (h_speed != 0 || v_speed != 0)) {
-				change_state(ENTITY_STATE.MOVING);
-			} 
-		} else if (entity_inner_state == INNER_STATE.LEAVE) {
-			
-		}
-        
-	    break;
-
-	case ENTITY_STATE.MOVING:
-		if (entity_inner_state == INNER_STATE.ENTER) {
-			
-			// Handle Moving State
-			// sprite_index = spr_capsule_run;	
-			entity_inner_state = INNER_STATE.UPDATE;
-			
-		} else if (entity_inner_state == INNER_STATE.UPDATE) {
-			
-			/*
-			if (alarm_array[ALARM_ARRAY.SOUND_STEP] == ALARM_INACTIVE) {
-				alarm_array[ALARM_ARRAY.SOUND_STEP] = ALARM_STEPS.SOUND_STEP;	
-			}
-			*/
-			
-			// Transition to Jumping State if jumping
-			/*
-		    if (key_jump || !on_ground) {
-				entity_inner_state = INNER_STATE.ENTER;
-		        entity_main_state = ENTITY_STATE.JUMP;
-		    }
-			*/
-        
-		    // Transition to Idle State if not moving horizontally
-			if ((!key_left && !key_right && !key_up && !key_down) && (h_speed == 0 && v_speed == 0)) {
-				change_state(ENTITY_STATE.IDLE);
-		    }
-		}
-
-	    break;
-
-	case ENTITY_STATE.JUMP:
-		if (entity_inner_state == INNER_STATE.ENTER) {
-		    // Handle Jumping State
-			// sprite_index = spr_capsule_air;
-			image_speed = 0;
-			entity_inner_state = INNER_STATE.UPDATE;
-			
-		} else if (entity_inner_state == INNER_STATE.UPDATE) {
-	
-			image_index = (v_speed < 0)? 0 : 2;
-	
-			if (v_speed > -2 && v_speed < 2) {
-				image_index = 1;
-			}
-
-		    // Transition to Idle State if not jumping
-		    if (on_ground) {
-				change_state(ENTITY_STATE.IDLE);
-		    }
-		}
-
-	    break;
-	/*
-	case ENTITY_STATE.HURT:
-		if (entity_inner_state == INNER_STATE.ENTER) {
-			sprite_index = spr_capsule_hurt;
-			if (!audio_is_playing(snd_player_hurt) && global.sfx) {
-				audio_play_sound(snd_player_hurt, 10, false);
-			}
-			alarm_array[ALARM_ARRAY.INVINCIBILITY] = ALARM_STEPS.INVINCIBILITY * invincibility_mult;
-		
-			if (entity_health <= 0) {
-				part_particles_create(global.pt_system, x, bbox_top + sprite_get_height(sprite_index) / 2, global.pt_capsule, 25);
-				instance_destroy();	
-			} else {
-				part_particles_create(global.pt_system, x, bbox_top + sprite_get_height(sprite_index) / 2, global.pt_capsule, 10);
-			}
-			
-			entity_inner_state = INNER_STATE.UPDATE;
-		} if (entity_inner_state == INNER_STATE.UPDATE) {
-		
-			if (on_ground) {
-				entity_inner_state = INNER_STATE.ENTER;
-			    entity_main_state = ENTITY_STATE.IDLE;
-			} else {
-				entity_inner_state = INNER_STATE.ENTER;
-				entity_main_state = ENTITY_STATE.JUMP;
-			}
-		}
-		
-		break;
-	*/
-}
+main_state_manager.run_state();
+equipment_state_manager.run_state();
 #endregion
 
 #region Player Movement
@@ -199,11 +40,11 @@ if (_input_x != 0 || _input_y != 0) {
 
 // Apply Decel
 if (_input_x == 0) {
-	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel;
+	if (h_speed > 0) h_speed -= decel; else if (h_speed < 0) h_speed += decel * DELTA;
 }
 	
 if (_input_y == 0) {
-	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel;
+	if (v_speed > 0) v_speed -= decel; else if (v_speed < 0) v_speed += decel * DELTA;
 }
 	
 // Stop If Low Speed

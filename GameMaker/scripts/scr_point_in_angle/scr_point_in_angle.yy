@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Entity",
-    "path": "folders/Scripts/Entity.yy",
+    "name": "Helper",
+    "path": "folders/Scripts/Helper.yy",
   },
 }

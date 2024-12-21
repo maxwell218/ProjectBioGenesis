@@ -1,33 +1,18 @@
 /// @description Initialize Player Variables
 event_inherited();
 
-#region State Function Array
-
-state_functions = [];
-
-// Idle
-state_functions[ENTITY_STATE.IDLE] = {
-	enter: scr_player_idle_state_enter(),
-	update: scr_player_idle_state_update(),
-	leave: scr_player_idle_state_leave(),
-};
-
-// Moving
-state_functions[ENTITY_STATE.MOVING] = {
-	enter: scr_player_moving_state_enter(),
-	update: scr_player_moving_state_update(),
-	leave: scr_player_moving_state_leave(),
-};
-
-#endregion
+#region Entity Variables
 
 entity_health = 10;
 entity_max_health = 10;
 entity_damage_on_touch = 0;
-entity_main_state = ENTITY_STATE.IDLE;
-entity_inner_state = INNER_STATE.ENTER;
+
+rotation_speed = 8;
+
 has_legs = true;
 holding_item = true;
+
+#endregion
 
 #region Inputs
 
@@ -44,8 +29,7 @@ key_primary_attack = 0;
 
 #region Movement Variables
 
-
-max_speed_while_walking = 0.8;
+max_speed_while_walking = 0.75;
 max_speed_while_aiming = 0.5;
 max_speed = max_speed_while_walking;
 h_speed = 0;
@@ -56,16 +40,22 @@ decel = .05;
 
 #endregion
 
-#region Attack Variables
+#region States
 
-is_aiming = false;
-is_ready_to_fire = false;
+// State Managers
+main_state_manager = new StateManager();
+equipment_state_manager = new StateManager();
+
+scr_player_states();
+
+main_state_manager.init_state(idle_state);
+equipment_state_manager.init_state(nothing_state);
 
 #endregion
 
 #region Functions
 
 // TODO Clean, find a better place
-lantern = instance_create_layer(x, y, "Entities", obj_lantern);
+// lantern = instance_create_layer(x, y, "Entities", obj_lantern);
 
 #endregion

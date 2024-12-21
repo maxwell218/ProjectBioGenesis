@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Collisions",
-    "path": "folders/Sprites/Collisions.yy",
+    "name": "Zombie",
+    "path": "folders/Sprites/Entities/Enemy/Zombie.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

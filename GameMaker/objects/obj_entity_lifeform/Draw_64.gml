@@ -19,7 +19,7 @@ if (global.debug) {
 	// Draw current entity state
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);
-	var _state = scr_get_state_string(entity_main_state);
+	var _state = main_state_manager.get_active_state_string();
 	draw_text(_bbox_left, _yy - healthbar_height - healthbar_y_offset - string_height(_state), _state);
 	
 	// var _hurt_alarm = alarm_array[0];
@@ -36,14 +36,14 @@ if (global.debug) {
 	// draw_text(bbox_left, y + 48, y);
 	// draw_text(bbox_left, y + 64, rotation_angle);
 	// draw_text(bbox_left, y + 32, image_angle);
-	//draw_text(_bbox_left, _yy + 32, moving_direction);
-	draw_text(_bbox_left, _yy + 32, legs_image_index);
+	// draw_text(_bbox_left, _yy + 32, moving_direction);
+	// draw_text(_bbox_left, _yy + 32, legs_image_index);
 	// draw_text(bbox_left, y + 48, percent);
 	// draw_text(bbox_left, y + 64, position);
 }
 
 // Draw healthbar
-if (entity_health != entity_max_health && entity_main_state != ENTITY_STATE.DEAD) {
+if (entity_health != entity_max_health && entity_health > 0) {
 	var _left = floor(_xx - 16 / 2 + .5);
 	var _right = floor(_xx + 16 / 2 + .5);
 	var _top = floor(_yy - healthbar_height - healthbar_y_offset + .5);

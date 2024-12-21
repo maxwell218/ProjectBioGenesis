@@ -9,7 +9,7 @@ target_x = x;
 target_y = y;
 
 // TODO might change
-target_y_offset = sprite_get_height(obj_player.sprite_index) / 2;
+target_y_offset = sprite_get_height(spr_player_idle) / 2;
 
 min_view_x = 0 + camera_width / 2;
 max_view_x = room_width - camera_width / 2;

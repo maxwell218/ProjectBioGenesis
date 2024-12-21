@@ -1,9 +1,4 @@
 /// @description Initializing Game Controller
-enum INNER_STATE {
-	ENTER,
-	UPDATE,
-	LEAVE,
-}
 
 randomize();
 
@@ -26,6 +21,7 @@ room_goto(rm_test);
 
 #region Delta time
 
+game_set_speed(144, gamespeed_fps);
 global.target_framerate = 60;
 global.target_delta = 1/global.target_framerate;
 global.actual_delta = delta_time/1000000;
@@ -35,7 +31,6 @@ global.delta_multiplier = global.actual_delta/global.target_delta;
 
 #region Macros
 
-// #macro EMPTY_TILE_ID 13
 #macro DELTA global.delta_multiplier
 #macro ALARM_INACTIVE -100
 #macro MIN_DELTA_TIME_SUPPORTED (1 / 144)

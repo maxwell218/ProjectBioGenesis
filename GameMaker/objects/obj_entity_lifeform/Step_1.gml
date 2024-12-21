@@ -1,9 +1,9 @@
 /// @description Depth Sorting
 // depth = -y;
 
-// TODO Animate legs until leg is out of frame, not based on movement
-if (entity_main_state != ENTITY_STATE.DEAD) {
-	if (has_legs && (is_moving() || (legs_image_index != 0 && floor(legs_image_index + .5) != 8))) { 
+// Animate legs until out of frame, based on movement
+if (entity_health > 0) {
+	if ((has_legs && is_moving_fast()) || !is_leg_cycle_complete()) { 
 		animate_legs();
 	} 
 }
@@ -11,6 +11,4 @@ if (entity_main_state != ENTITY_STATE.DEAD) {
 var _angle = angle_difference(moving_angle, moving_direction);
 moving_angle -= min(abs(_angle), rotation_speed) * sign(_angle);
 
-if (moving_angle >= 360 || moving_angle <= -360) {
-	moving_angle = 0;	
-}
+clamp_rotation(moving_angle);
