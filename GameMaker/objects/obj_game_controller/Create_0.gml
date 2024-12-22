@@ -11,7 +11,7 @@ randomize();
 version_number = "v0.0.1";
 global.debug = false;
 
-// Resizes the application surface to fit within the view port
+// Resizes the application surface to fit within theglo view port
 display_set_gui_size(view_wport[0], view_hport[0]);
 // surface_resize(application_surface, view_wport[0], view_hport[0]);
 
@@ -19,7 +19,14 @@ display_set_gui_size(view_wport[0], view_hport[0]);
 
 room_goto(rm_test);
 
-#region Delta time
+#region Game Rules
+
+global.max_stacksize = 10;
+global.tile_size = 16;
+
+#endregion
+
+#region Delta Time
 
 game_set_speed(144, gamespeed_fps);
 global.target_framerate = 60;

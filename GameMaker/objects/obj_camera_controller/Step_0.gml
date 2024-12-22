@@ -8,7 +8,7 @@ if (instance_exists(follow)) {
 }
 
 // Ease in effect
-// TODO Tweak/Find right values
+// TODO Tweak/find right values
 x += (target_x - x) / 25;
 y += (target_y - y) / 25;
 
