@@ -24,6 +24,7 @@ key_jump = 0;
 key_jump_held = 0;
 key_aim_held = 0;
 key_primary_attack = 0;
+key_inventory = 0;
 
 #endregion
 

@@ -23,6 +23,7 @@ room_goto(rm_test);
 
 global.max_stacksize = 10;
 global.tile_size = 16;
+global.gui_scale = 3;
 
 #endregion
 

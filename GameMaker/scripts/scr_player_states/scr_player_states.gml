@@ -3,6 +3,7 @@ function scr_player_states() {
 // States
 idle_state = new State();
 moving_state = new State();
+search_state = new State();
 
 nothing_state = new State();
 aiming_state = new State();
@@ -20,6 +21,11 @@ idle_state.run = function() {
 	if ((key_left || key_right || key_up || key_down) || (h_speed != 0 || v_speed != 0)) {
 		main_state_manager.change_state(moving_state);
 	} 
+	
+	// Transition to search state
+	if (key_inventory) {
+		main_state_manager.change_state(search_state);	
+	}
 }
 
 idle_state.stop = function() {
@@ -42,6 +48,11 @@ moving_state.run = function() {
 	if ((!key_left && !key_right && !key_up && !key_down) && (h_speed == 0 && v_speed == 0)) {
 		main_state_manager.change_state(idle_state);
 	}
+	
+	// Transition to search state
+	if (key_inventory) {
+		main_state_manager.change_state(search_state);	
+	}
 }
 
 moving_state.stop = function() {
@@ -50,6 +61,29 @@ moving_state.stop = function() {
 	
 moving_state.to_string = function() {
 	return "moving";	
+}
+#endregion
+
+#region Search State
+	
+search_state.start = function () {
+	// sprite_index = spr_player_idle;
+}
+
+search_state.run = function() {
+
+	// Transition to idle state
+	if (key_inventory) {
+		main_state_manager.change_state(idle_state);	
+	}
+}
+
+search_state.stop = function() {
+	
+}
+	
+search_state.to_string = function() {
+	return "searching";	
 }
 #endregion
 	

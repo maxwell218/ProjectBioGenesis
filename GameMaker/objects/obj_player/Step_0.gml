@@ -13,6 +13,8 @@ key_jump_held = keyboard_check(vk_space);
 key_aim_held = mouse_check_button(mb_right);
 key_primary_attack = mouse_check_button_pressed(mb_left);
 
+key_inventory = keyboard_check_pressed(vk_tab);
+
 #endregion
 
 #region Player States
@@ -22,9 +24,14 @@ equipment_state_manager.run_state();
 
 #region Player Movement
 
+var _input_x = 0;
+var _input_y = 0;
+
 // Calculate Input Axis
-var _input_x = (key_right - key_left);
-var _input_y = (key_down - key_up);
+if (main_state_manager.active_state != search_state) {
+	_input_x = (key_right - key_left);
+	_input_y = (key_down - key_up);
+}
 
 // Get Length
 if (_input_x != 0 || _input_y != 0) {
