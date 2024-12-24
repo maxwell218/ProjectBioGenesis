@@ -11,6 +11,17 @@ function InventoryItem(_item_data = undefined, _amount = 1) constructor {
 		draw_sprite_ext(spr_inventory_icon, item_data.icon_id, _xx, _yy, 1, 1, 0, c_white, 1);
 					
 		// Draw amount
+		if (item_data.is_stackable()) {
+						
+			draw_set_halign(fa_right);
+			draw_set_valign(fa_bottom);
+						
+			// Draw amount
+			var _amount_string = string(amount);
+			var _string_width = string_width(_amount_string);
+			var _string_height = string_height(_amount_string);
+			draw_text_ext_transformed(_xx + global.tile_size - 1, _yy + global.tile_size + 3, _amount_string, _string_height, _string_width, 1, 1, 0);
+		}
 	}
 	
 	#endregion

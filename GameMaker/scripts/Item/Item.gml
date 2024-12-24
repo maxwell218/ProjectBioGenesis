@@ -1,4 +1,4 @@
-function Item(_name = "", _desc = "", _type = ItemType.Misc, _price = 0, _stacksize = global.max_stacksize, _stats = undefined) constructor {
+function Item(_name = "", _desc = "", _type = ItemType.Misc, _price = 0, _max_stacksize = global.max_stacksize, _stats = undefined) constructor {
 	
 	// Get the id from our index tracker
 	// var _value = variable_struct_get(_index_struct, "icon_id");
@@ -8,7 +8,7 @@ function Item(_name = "", _desc = "", _type = ItemType.Misc, _price = 0, _stacks
 	desc = _desc;											// Tooltip description
 	type = _type;											// Type of item
 	price = _price;											// Buy price, sell price is half rounded up
-	stacksize = _stacksize;									// Max stacks for the same item
+	max_stacksize = _max_stacksize;									// Max stacks for the same item
 	// transfer_sound = _transfer_sound;					// Moving items around the ui (on_pickup and on_putdown with pitch alteration)
 	stats = _stats;											// For ItemMeleeWeapon, ItemRangedWeapon, ItemConsumable, ItemAmmunition, ItemArmor
 	
@@ -19,7 +19,7 @@ function Item(_name = "", _desc = "", _type = ItemType.Misc, _price = 0, _stacks
 	
 	// Returns true if an item can stack
 	function is_stackable() {
-		return stacksize > 1;
+		return max_stacksize > 1;
 	}
 	
 	// Returns the sell value of an item
