@@ -129,5 +129,11 @@ function increment_index_value() {
 
 inventory_system = new InventorySystem();
 
+// TODO Remove item cheating
+inventory_system.add_item_to_array(new InventoryItem(global.item_data[5], 1), global.player_hotbar);
+inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
+inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
+inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
+
 struct_remove(index, "icon_id");
 delete index;

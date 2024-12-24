@@ -68,9 +68,15 @@ moving_state.to_string = function() {
 	
 search_state.start = function () {
 	// sprite_index = spr_player_idle;
+	io_clear();
 }
 
 search_state.run = function() {
+	
+	// Transition to moving state if moving
+	if ((key_left || key_right || key_up || key_down)) {
+		main_state_manager.change_state(moving_state);
+	} 
 
 	// Transition to idle state
 	if (key_inventory) {
