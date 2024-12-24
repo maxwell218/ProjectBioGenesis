@@ -10,7 +10,6 @@ entity_damage_on_touch = 0;
 rotation_speed = 8;
 
 has_legs = true;
-holding_item = true;
 
 #endregion
 

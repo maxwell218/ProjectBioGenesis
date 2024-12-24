@@ -97,11 +97,12 @@ nothing_state.start = function () {
 }
 
 nothing_state.run = function() {
-	
-	// Transition to aiming state
-	if (key_aim_held && image_index <= 0) {
-		equipment_state_manager.change_state(aiming_state);
-		return;
+	if (main_state_manager.active_state != search_state) {
+		// Transition to aiming state
+		if (key_aim_held && image_index <= 0) {
+			equipment_state_manager.change_state(aiming_state);
+			return;
+		}
 	}
 
 }
@@ -129,7 +130,7 @@ aiming_state.start = function () {
 aiming_state.run = function() {
 	
 	// Start exit aiming state condition
-	if (!key_aim_held) {
+	if (!key_aim_held || main_state_manager.active_state == search_state) {
 		
 		if (image_index <= 0.5) {
 			equipment_state_manager.change_state(nothing_state);

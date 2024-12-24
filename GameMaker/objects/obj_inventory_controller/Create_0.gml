@@ -20,29 +20,29 @@ enum RecipeType {
 //enum ItemId {
 	
 //	// Consumables
-//	Bandage = 2,
+//	Bandage = 0,
 	
 //	// Light Sources
-//	LanternLit = 3,
-//	Lantern = 4,
+//	LanternLit = 1,
+//	Lantern = 2,
 	
 //	// Ammunition
-//	PistolMag = 5,
-//	ShotgunShell = 6,
+//	PistolMag = 3,
+//	ShotgunShell = 4,
 	
 //	// Ranged Weapons
-//	Pistol = 7,
-//	Shotgun = 8,
+//	Pistol = 5,
+//	Shotgun = 6,
 	
 //	// Melee Weapons
-//	Shovel = 9,
+//	Shovel = 7,
 //}
 
 // Item Data
 global.item_data = [];			// Array of Struct.Item
 global.player_inventory = [];	// Array of Struct.Item
 global.player_hotbar = [];		// Array of Struct.Item
-index = { icon_id: 2 };			// Used as an image_index tracker for spr_inventory_icon
+index = { icon_id: 0 };			// Used as an image_index tracker for spr_inventory_icon
 
 #region Functions
 
@@ -127,8 +127,7 @@ function increment_index_value() {
 
 #endregion
 
-inventory = new Inventory();
-inventory.init_inventory();
+inventory_system = new InventorySystem();
 
 struct_remove(index, "icon_id");
 delete index;

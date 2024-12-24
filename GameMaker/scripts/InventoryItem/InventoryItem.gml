@@ -6,9 +6,9 @@ function InventoryItem(_item_data = undefined, _amount = 1) constructor {
 	
 	#region InventoryItem Properties
 	
-	function draw_inventory_item() {
+	function draw_inventory_item(_xx, _yy) {
 		// Draw icon
-		draw_sprite_ext(spr_inventory_icon, item_data.icon_id, x + _margin, y + (_margin * (_i + 1)) + (global.tile_size * _i), 1, 1, 0, c_white, 1);
+		draw_sprite_ext(spr_inventory_icon, item_data.icon_id, _xx, _yy, 1, 1, 0, c_white, 1);
 					
 		// Draw amount
 	}

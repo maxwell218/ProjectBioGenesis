@@ -28,6 +28,7 @@ var _input_x = 0;
 var _input_y = 0;
 
 // Calculate Input Axis
+// Simulate no input when player is searching
 if (main_state_manager.active_state != search_state) {
 	_input_x = (key_right - key_left);
 	_input_y = (key_down - key_up);
