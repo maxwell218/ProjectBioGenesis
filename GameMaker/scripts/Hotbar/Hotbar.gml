@@ -1,6 +1,7 @@
-function Hotbar() constructor {
+function Hotbar(_array_ref) constructor {
 	slots = 4;
 	selected_slot = 0;
+	array = _array_ref;
 	
 	margin = 2;
 	width = 1;
@@ -18,7 +19,7 @@ function Hotbar() constructor {
 	
 	function init_hotbar() {
 		for (var _i = 0; _i < slots; _i++) {
-			global.player_hotbar[_i] = undefined;
+			array[_i] = undefined;
 		}
 	}
 	
@@ -32,16 +33,17 @@ function Hotbar() constructor {
 	}
 	
 	function draw_hotbar() {
-		draw_rectangle(start_x, start_y, start_x + gui_width, start_y + gui_height, false);
 		
-		for (var _i = 0; _i < array_length(global.player_hotbar); _i++) {
+		// draw_rectangle(start_x, start_y, start_x + gui_width, start_y + gui_height, false);
+		
+		for (var _i = 0; _i < array_length(array); _i++) {
 			
 			var _xx = start_x;
 			var _yy = start_y + (margin * _i) + (global.tile_size * _i);
 
-			if (global.player_hotbar[_i] != undefined) {
+			if (array[_i] != undefined) {
 				
-				var _item = global.player_hotbar[_i];
+				var _item = array[_i];
 				
 				// Draw background
 				draw_sprite_ext(spr_inventory_bg, 0, _xx, _yy, 1, 1, 0, c_white, 1);
@@ -49,7 +51,7 @@ function Hotbar() constructor {
 				// Draw icon and amount
 				_item.draw_inventory_item(_xx, _yy);
 				
-				// draw_sprite_ext(spr_inventory_icon, global.player_hotbar[_i].icon_id, x + _margin, y + (_margin * (_i + 1)) + (global.tile_size * _i), 1, 1, 0, c_white, 1);
+				// draw_sprite_ext(spr_inventory_icon, array[_i].icon_id, x + _margin, y + (_margin * (_i + 1)) + (global.tile_size * _i), 1, 1, 0, c_white, 1);
 				
 			} else {
 				// Draw empty background

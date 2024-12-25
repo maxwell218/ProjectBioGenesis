@@ -133,7 +133,7 @@ inventory_system = new InventorySystem();
 inventory_system.add_item_to_array(new InventoryItem(global.item_data[5], 1), global.player_hotbar);
 inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
 inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
-inventory_system.add_item_to_array(new InventoryItem(global.item_data[3], 1), global.player_hotbar);
+global.player_hotbar[2] = new InventoryItem(global.item_data[3], 2);
 
 struct_remove(index, "icon_id");
 delete index;

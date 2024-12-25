@@ -1,45 +1,16 @@
 // Handles the hotbar, the inventory and any opened container
 function InventorySystem() constructor {
 	
-	inventory = new Inventory();
+	inventory = new Inventory(global.player_inventory);
 	inventory.init_inventory();
 
-	hotbar = new Hotbar();
+	hotbar = new Hotbar(global.player_hotbar);
 	hotbar.init_hotbar();
 	
 	pickup_item = undefined;
-	is_cell_hover = false;
+	slot_hover_index = false;
 	
 	#region InventorySystem Properties
-	
-	function handle_inventory_system() {
-		
-		// Returns undefined if we are not hovering the hotbar's cells
-		is_cell_hover = get_mouse_cell_slot(hotbar);
-		
-		if (mouse_check_button_pressed(mb_left) && hotbar.is_hover()) {
-			mouse_clear(mb_left);
-			
-			show_debug_message("test");
-		}
-		
-		// Get the hovered cell based on the mouse coord on the gui layer
-		if (obj_player.main_state_manager.active_state == obj_player.search_state) {
-			
-			// Returns undefined if we are not hovering the inventory's cells
-			is_cell_hover = get_mouse_cell_slot(inventory);
-			
-			if (mouse_check_button_pressed(mb_left) && is_cell_hover != undefined) {
-				mouse_clear(mb_left);
-			}
-			
-		} else {
-			// Since we can close the inventory without first unsetting the cell, we need to reset the cell just in case
-			if (inventory.hovered_cell != undefined) {
-				inventory.hovered_cell = undefined;
-			}
-		}
-	}
 	
 	function get_mouse_cell_slot(_ui) {
 		
@@ -86,6 +57,43 @@ function InventorySystem() constructor {
 		return _ui.hovered_cell;
 	}
 	
+	function handle_inventory_system() {
+		
+		// Returns undefined if we are not hovering the hotbar's slots
+		handle_ui_mouse_click(hotbar)
+		
+		// Get the hovered cell based on the mouse coord on the gui layer
+		if (obj_player.main_state_manager.active_state == obj_player.search_state) {
+			
+			// Returns undefined if we are not hovering the inventory's slots
+			handle_ui_mouse_click(inventory);
+			
+		} else {
+			// Since we can close the inventory without first unsetting the cell, we need to reset the cell just in case
+			if (inventory.hovered_cell != undefined) {
+				inventory.hovered_cell = undefined;
+			}
+		}
+	}
+	
+	function handle_ui_mouse_click(_ui) {
+		// Returns undefined if we are not hovering the ui's slots
+		slot_hover_index = get_mouse_cell_slot(_ui);
+		
+		if (mouse_check_button_pressed(mb_left) && _ui.is_hover()) {
+			mouse_clear(mb_left);
+			
+			if (slot_hover_index != undefined) {
+				if (pickup_item == undefined) {
+					pickup_item = _ui.array[slot_hover_index];
+					_ui.array[slot_hover_index] = undefined;
+				} else {
+					add_item_to_array(pickup_item, _ui.array, slot_hover_index);
+				}
+			}
+		}
+	}
+	
 	// Can be called both by clicking an empty slot and shift clicking from a container or another ui element (hotbar)
 	function add_item_to_array(_item_data, _array, _slot_index = undefined) {
 		
@@ -95,20 +103,28 @@ function InventorySystem() constructor {
 		
 		// Handle specific slot selected
 		if (_slot_index != undefined) {
-			_result = handle_merging_logic(_item_data, _array[_slot_index]);
+			var _slot_item = _array[_slot_index];
 			
-			// If we result in no item left, return
-			if (_result == undefined) {
-				return;	
+			if (_slot_item != undefined) {
+				// Check if the current slot item corresponds to the item we are trying to add
+				if (_slot_item.item_data.icon_id == _item_data.item_data.icon_id && _slot_item.item_data.is_stackable()) {
+				
+					_result = handle_merging_logic(_item_data, _array[_slot_index]);
+			
+					// If we result in no item left, return
+					if (_result == undefined) {
+						pickup_item = undefined;
+						return;	
+					}
+				}
 			}
 			// We either failed to merge, or the item is overflow
-			else {
-				// Initialise the switch
-				var _temp_item = _array[_slot_index];
-				_array[_slot_index] = pickup_item;
-				pickup_item = _temp_item;
-				return;
-			}
+			// Initialise the switch
+			var _temp_item = _array[_slot_index];
+			_array[_slot_index] = pickup_item;
+				
+			pickup_item = _temp_item;
+			return;
 			
 		} 
 		
@@ -183,7 +199,7 @@ function InventorySystem() constructor {
 		var _max_stacksize = _slot_data.item_data.max_stacksize
 					
 		// Check if there is room for stacking
-		if (_slot_data.amount < _max_stacksize) {
+		if (_slot_data.amount < _max_stacksize && _item_data.amount < _max_stacksize) {
 						
 			// Calulate remainder of _item_data.amount
 			if (_slot_data.amount + _item_data.amount > _max_stacksize) {
@@ -237,7 +253,7 @@ function InventorySystem() constructor {
 		}
 		
 		// TODO Tooltip
-		//if (is_cell_hover != undefined && global.debug) {
+		//if (slot_hover_index != undefined && global.debug) {
 		//	draw_rectangle(_mouse_gui_x, _mouse_gui_y, _mouse_gui_x + 20, _mouse_gui_y + 20, false);
 		//}
 	}

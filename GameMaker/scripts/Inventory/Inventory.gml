@@ -1,6 +1,7 @@
-function Inventory(_slots = 8, _width = 2) constructor {
+function Inventory(_array_ref, _slots = 8, _width = 2) constructor {
 	slots = _slots;
 	width = _width;
+	array = _array_ref;
 	
 	// Height is determined by the width and number of slots
 	height = slots / width;
@@ -10,8 +11,8 @@ function Inventory(_slots = 8, _width = 2) constructor {
 	
 	start_x = margin + global.tile_size + hotbar_spacing;
 	start_y = margin;
-	gui_width = start_x + global.tile_size * width + margin - 1;
-	gui_height = start_y + global.tile_size * height + margin * (height - 1) - 1;
+	gui_width = global.tile_size * width + margin - 1;
+	gui_height = global.tile_size * height + margin * (height - 1) - 1;
 	
 	hovered_cell = undefined;
 	
@@ -22,21 +23,31 @@ function Inventory(_slots = 8, _width = 2) constructor {
 		// Initialize each index to undefined (no item)
 		for (var _i = 0; _i < slots; _i++) {
 			
-			global.player_inventory[_i]	= undefined;
+			array[_i]	= undefined;
 			
 			// TODO Load inventory from save
 		}
 	}
 	
+	function is_hover() {
+		// Get mouse coords on the gui layer
+		var _mouse_gui_x = device_mouse_x_to_gui(0);
+		var _mouse_gui_y = device_mouse_y_to_gui(0);
+		
+		return point_in_rectangle(_mouse_gui_x, _mouse_gui_y, start_x, start_y, start_x + gui_width, start_y + gui_height);
+	}
+	
 	function get_cell_data(_cell) {
 		if (_cell != undefined) {
-			if (_cell < array_length(global.player_inventory) && _cell > 0) {
-				return global.player_inventory[_cell];	
+			if (_cell < array_length(array) && _cell > 0) {
+				return array[_cell];	
 			}
 		}
 	}
 	
 	function draw_inventory() {
+		
+		draw_rectangle(start_x, start_y, start_x + gui_width, start_y + gui_height, false);
 		
 		// Get mouse coords on the gui layer
 		var _mouse_gui_x = device_mouse_x_to_gui(0);
@@ -56,9 +67,9 @@ function Inventory(_slots = 8, _width = 2) constructor {
 				var _yy = _row * (global.tile_size + margin) + _y_offset;
 				
 				// Check if there is an item
-				if (global.player_inventory[_index] != undefined) {	
+				if (array[_index] != undefined) {	
 					
-					var _item = global.player_inventory[_index];
+					var _item = array[_index];
 					
 					// Draw background
 					draw_sprite_ext(spr_inventory_bg, 0, _xx, _yy, 1, 1, 0, c_white, 1);
